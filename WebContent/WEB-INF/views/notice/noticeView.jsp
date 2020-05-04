@@ -11,10 +11,10 @@
 			width:1000px;
 			margin: 0 auto;
 		}
-		.table tr>td:first-child{
+		.table-wrapper tr>td:first-child{
 			width:20%;
 		}
-		.table-wrapper,.comment-write{
+		.comment-write{
 			width:1000px;
 			margin: 0 auto;
 		}

@@ -10,6 +10,7 @@ import com.oreilly.servlet.ParameterParser;
 
 import common.JDBCTemplate;
 import notice.model.vo.Notice;
+import notice.model.vo.NoticeComment;
 
 public class NoticeDao {
 
@@ -151,6 +152,29 @@ public class NoticeDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public int NoticeCommentInset(Connection conn, NoticeComment nc) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "insert into notice_comment values(seq_notice_comment.nextval,?,?,?,?,?,sysdate)";
+		try {
+			pstmt = conn.prepareStatement(query);
+			int index = 1;
+			pstmt.setInt(index++, nc.getNoticeCommentLevel());
+			pstmt.setString(index++, nc.getNoticeCommentWriter());
+			pstmt.setString(index++, nc.getNoticeCommentContent());
+			pstmt.setInt(index++, nc.getNoticeRef());
+			//pstmt.setInt(index++, nc.getNoticeCommentRef());
+			pstmt.setString(index++, nc.getNoticeCommentRef()==0?null:String.valueOf(nc.getNoticeCommentRef()));
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
 			JDBCTemplate.close(pstmt);
 		}
 		return result;

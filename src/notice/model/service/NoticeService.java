@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import common.JDBCTemplate;
 import notice.model.dao.NoticeDao;
 import notice.model.vo.Notice;
+import notice.model.vo.NoticeComment;
 import notice.model.vo.NoticePageData;
 
 public class NoticeService {
@@ -87,6 +88,18 @@ public class NoticeService {
 	public int updateNotice(Notice n) {
 		Connection conn = JDBCTemplate.getConnection();
 		int result = new NoticeDao().updateNotice(conn,n);
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	public int noticeCommentInsert(NoticeComment nc) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new NoticeDao().NoticeCommentInset(conn,nc);
 		if(result>0) {
 			JDBCTemplate.commit(conn);
 		}else {
