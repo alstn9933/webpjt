@@ -94,6 +94,7 @@
 			<c:forEach items="${list }" var="nc">
 				<c:if test="${nc.noticeCommentLevel eq  1 }">
 					<ul class="commentList">
+						<li style="width:10%; text-align:center;"><span>${nc.noticeCommentWriter }</span></li>
 						<li style="width:60%;"><span>${nc.noticeCommentContent }</span></li>
 						<li style="width:10%; text-align:center;"><span>${nc.noticeCommentDate }</span></li>
 						<li style="width:20%; text-align:center;">
