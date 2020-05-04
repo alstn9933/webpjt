@@ -25,6 +25,11 @@
 			float:left;
 			color:black;
 		}
+		.comment-wrapper a{
+			display:inline-block;
+			border-radius:3px;
+			background-color:#ccc;
+		}
 	</style>
 </head>
 <body>
@@ -87,20 +92,46 @@
 		</c:if>
 		<div class="comment-wrapper">
 			<c:forEach items="${list }" var="nc">
-				<ul class="commentList">
-					<li style="width:10%; text-align:center;"><span>${nc.noticeCommentWriter }</span></li>
-					<li style="width:60%;"><span>${nc.noticeCommentContent }</span></li>
-					<li style="width:10%; text-align:center;"><span>${nc.noticeCommentDate }</span></li>
-					<li style="width:20%; text-align:center;">
-						<c:if test="${not empty sessionScope.member }">
-							<a href="javascript:void(0)" onclick="insertComment(this, '${nc.noticeCommentNo}','${n.noticeNo }','${sessionScope.member.memberId }');">댓글달기</a>
-							<c:if test="${sessionScope.member.memberId==nc.noticeCommentWriter }">
-								<a href="javascript:void(0)">수정</a>
-								<a href="javascript:void(0)">삭제</a>
+				<c:if test="${nc.noticeCommentLevel eq  1 }">
+					<ul class="commentList">
+						<li style="width:60%;"><span>${nc.noticeCommentContent }</span></li>
+						<li style="width:10%; text-align:center;"><span>${nc.noticeCommentDate }</span></li>
+						<li style="width:20%; text-align:center;">
+							<c:if test="${not empty sessionScope.member }">
+								<a href="javascript:void(0)" onclick="insertComment(this, '${nc.noticeCommentNo}','${n.noticeNo }','${sessionScope.member.memberId }');">댓글달기</a>
+								<c:if test="${sessionScope.member.memberId==nc.noticeCommentWriter }">
+									<a href="javascript:void(0)">수정</a>
+									<a href="javascript:void(0)">삭제</a>
+								</c:if>
 							</c:if>
-						</c:if>
-					</li>
-				</ul>
+						</li>
+					</ul>
+				</c:if>
+				<c:forEach items="${list }" var="ncc">
+					<c:if test="${ncc.noticeCommentLevel eq 2 && nc.noticeCommentNo eq ncc.noticeCommentRef}">
+						<ul class="commentList">
+							<li style="width:5%; text-align:center;">
+								<span>└─</span>
+							</li>
+							<li style="width:10%; text-align:center;">
+								<span>${ncc.noticeCommentWriter }</span>
+							</li>
+							<li style="width:55%">
+								<span>${ncc.noticeCommentContent }</span>
+							</li>
+							<li style="width:10%; text-align:center;">
+								<span>${ncc.noticeCommentDate }</span>
+							</li>
+							<li style="width:20%; text-align:center;">
+								<c:if test="${not empty sessionScope.member.memberId && sessionScope.member.memberId eq ncc.noticeCommentWriter }">
+									<a></a>
+									<a href="javascriptLvoid(0)">수정</a>
+									<a href="javascriptLvoid(0)">삭제</a>
+								</c:if>
+							</li>
+						</ul>
+					</c:if>
+				</c:forEach>
 			</c:forEach>
 		</div>
 	</section>
