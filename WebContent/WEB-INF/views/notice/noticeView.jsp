@@ -15,7 +15,7 @@
 			width:20%;
 		}
 		.commentList{
-			width:100%;
+			width: 100%;
 			clear: both;
 			border: 1px solid #ccc;
 			border-radius: 5px;
@@ -93,7 +93,7 @@
 					<li style="width:10%; text-align:center;"><span>${nc.noticeCommentDate }</span></li>
 					<li style="width:20%; text-align:center;">
 						<c:if test="${not empty sessionScope.member }">
-							<a href="javascript:void(0)">댓글달기</a>
+							<a href="javascript:void(0)" onclick="insertComment(this, '${nc.noticeCommentNo}','${n.noticeNo }','${sessionScope.member.memberId }')">댓글달기</a>
 							<c:if test="${sessionScope.member.memberId==nc.noticeCommentWriter }">
 								<a href="javascript:void(0)">수정</a>
 								<a href="javascript:void(0)">삭제</a>
