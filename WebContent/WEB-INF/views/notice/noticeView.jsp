@@ -19,7 +19,7 @@
 			clear: both;
 			border: 1px solid #ccc;
 			border-radius: 5px;
-			overview:hidden;
+			overflow:hidden;
 		}
 		.commentList>li{
 			float:left;
@@ -93,7 +93,7 @@
 					<li style="width:10%; text-align:center;"><span>${nc.noticeCommentDate }</span></li>
 					<li style="width:20%; text-align:center;">
 						<c:if test="${not empty sessionScope.member }">
-							<a href="javascript:void(0)" onclick="insertComment(this, '${nc.noticeCommentNo}','${n.noticeNo }','${sessionScope.member.memberId }')">댓글달기</a>
+							<a href="javascript:void(0)" onclick="insertComment(this, '${nc.noticeCommentNo}','${n.noticeNo }','${sessionScope.member.memberId }');">댓글달기</a>
 							<c:if test="${sessionScope.member.memberId==nc.noticeCommentWriter }">
 								<a href="javascript:void(0)">수정</a>
 								<a href="javascript:void(0)">삭제</a>
@@ -114,6 +114,23 @@
 			if(confirm("정말 삭제하시겠습니까?")){
 				location.href="/deleteNotice?noticeNo="+noticeNo;
 			}
+		}
+		function insertComment(obj, noticeCommentNo, noticeNo, memberId){
+			var $form = $("<form action='/noticeCommentInsert' method='post'></form>");
+			var $ul = $("<ul class='commentList'></ul>");
+			$form.append($("<input type='hidden' name='noticeCommentWriter' value='"+memberId+"'>"));
+			$form.append($("<input type='hidden' name='noticeRef' value='"+noticeNo+"'>"));
+			$form.append($("<input type='hidden' name='noticeCommentLevel' value='2'>"));
+			$form.append($("<input type='hidden' name='noticeCommentRef' value='"+noticeCommentNo+"'>"));
+			var $li1 = $("<li style='width:5%'>└─</li>");
+			var $li2 = $("<li style='width:75%'></li>");
+			$li2.append($("<input type='text' name='noticeCommentContent' class='form-control'>"));
+			var $li3 = $("<li style='width:20%'></li>");
+			$li3.append($("<button type='submit' class='btn btn-link btn-sm'>등록</button>"));
+			$li3.append($("<button type='button' class='btn btn-link btn-sm' onclick='insertCancel(this)'>취소</button>"));
+			$ul.append($li1).append($li2).append($li3);
+			$form.append($ul);
+			$(obj).parent().parent().after($form);
 		}
 	</script>
 </body>
