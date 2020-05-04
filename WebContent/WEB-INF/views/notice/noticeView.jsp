@@ -54,6 +54,26 @@
 				</tr>
 			</table>
 		</div>
+		<c:if test="${not empty sessinScope.member }">
+			<div class="comment-wrapper">
+				<form action="/noticeCommentInsert" method="post">
+				<input type="hidden" name="noticeCommentWriter" value="${sessionScope.member.memberId }">
+				<input type="hidden" name="noticeRef" value="${n.noticeNo }">
+				<input type="hidden" name="noticeCommentLevel" value="1">
+				<input type="hidden" name="noticeCommentRef" value="0">
+					<table class="table">
+						<tr>
+							<td width="85%">
+								<input type="text" class="form-control" name="noticeCommentContent">
+							</td>
+							<td width="15%">
+								<button type="submit" class="btn btn-primary">등록</button>
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</c:if>
 	</section>
 	<script>
 		function fileDownload(filename,filepath){
