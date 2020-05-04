@@ -25,11 +25,6 @@
 			float:left;
 			color:black;
 		}
-		.comment-wrapper a{
-			display:inline-block;
-			border-radius:3px;
-			background-color:#ccc;
-		}
 	</style>
 </head>
 <body>
@@ -94,15 +89,22 @@
 			<c:forEach items="${list }" var="nc">
 				<c:if test="${nc.noticeCommentLevel eq  1 }">
 					<ul class="commentList">
-						<li style="width:10%; text-align:center;"><span>${nc.noticeCommentWriter }</span></li>
-						<li style="width:60%;"><span>${nc.noticeCommentContent }</span></li>
-						<li style="width:10%; text-align:center;"><span>${nc.noticeCommentDate }</span></li>
+						<li style="width:10%; text-align:center;">
+							<span>${nc.noticeCommentWriter }</span>
+						</li>
+						<li style="width:60%;">
+							<span>${nc.noticeCommentContent }</span>
+							<input type="text" class="form-control" name="noticeCommentContent" value="${nc.noticeCommentContent }" style="disaplay:none;">
+						</li>
+						<li style="width:10%; text-align:center;">
+							<span>${nc.noticeCommentDate }</span>
+						</li>
 						<li style="width:20%; text-align:center;">
 							<c:if test="${not empty sessionScope.member }">
 								<a href="javascript:void(0)" onclick="insertComment(this, '${nc.noticeCommentNo}','${n.noticeNo }','${sessionScope.member.memberId }');">댓글달기</a>
 								<c:if test="${sessionScope.member.memberId==nc.noticeCommentWriter }">
 									<a href="javascript:void(0)">수정</a>
-									<a href="javascript:void(0)">삭제</a>
+									<a href="javascript:void(0)" onclick="deleteComment('${nc.noticeCommentNo}','${nc.noticeRef }');">삭제</a>
 								</c:if>
 							</c:if>
 						</li>
@@ -119,6 +121,7 @@
 							</li>
 							<li style="width:55%">
 								<span>${ncc.noticeCommentContent }</span>
+								<input type="text" class="form-control" name="noticeCommentContent" value="${ncc.noticeCommentContent }" style="disaplay:none;">
 							</li>
 							<li style="width:10%; text-align:center;">
 								<span>${ncc.noticeCommentDate }</span>
@@ -127,7 +130,7 @@
 								<c:if test="${not empty sessionScope.member.memberId && sessionScope.member.memberId eq ncc.noticeCommentWriter }">
 									<a></a>
 									<a href="javascriptLvoid(0)">수정</a>
-									<a href="javascriptLvoid(0)">삭제</a>
+									<a href="javascriptLvoid(0)" onclick="deleteComment('${ncc.noticeCommentNo}','${ncc.noticeRef }');">삭제</a>
 								</c:if>
 							</li>
 						</ul>
@@ -148,6 +151,8 @@
 			}
 		}
 		function insertComment(obj, noticeCommentNo, noticeNo, memberId){
+			$(obj).parent().hide();
+			
 			var $form = $("<form action='/noticeCommentInsert' method='post'></form>");
 			var $ul = $("<ul class='commentList'></ul>");
 			$form.append($("<input type='hidden' name='noticeCommentWriter' value='"+memberId+"'>"));
@@ -163,6 +168,14 @@
 			$ul.append($li1).append($li2).append($li3);
 			$form.append($ul);
 			$(obj).parent().parent().after($form);
+		}
+		function insertCancel(obj){
+			$(obj).parents('form').prev().children().last().show();
+			$(obj).parents('form').remove();
+		}
+		
+		function deleteComment(noticeCommentNo,noticeRef){
+			location.href="/noticeComentDelete?noticeCommentNo="+noticeCommentNo+"&noticeRef="+noticeRef;
 		}
 	</script>
 </body>
