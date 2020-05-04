@@ -210,5 +210,21 @@ public class NoticeDao {
 		return list;
 	}
 
+	public int deleteNoticeComment(Connection conn, int noticeCommentNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "delete from notice_comment where notice_comment_no=?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, noticeCommentNo);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
 
 }

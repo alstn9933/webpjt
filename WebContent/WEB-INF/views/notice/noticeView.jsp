@@ -94,7 +94,7 @@
 						</li>
 						<li style="width:60%;">
 							<span>${nc.noticeCommentContent }</span>
-							<input type="text" class="form-control" name="noticeCommentContent" value="${nc.noticeCommentContent }" style="disaplay:none;">
+							<input type="text" class="form-control" name="noticeCommentContent" value="${nc.noticeCommentContent }" style="display:none;">
 						</li>
 						<li style="width:10%; text-align:center;">
 							<span>${nc.noticeCommentDate }</span>
@@ -103,7 +103,7 @@
 							<c:if test="${not empty sessionScope.member }">
 								<a href="javascript:void(0)" onclick="insertComment(this, '${nc.noticeCommentNo}','${n.noticeNo }','${sessionScope.member.memberId }');">댓글달기</a>
 								<c:if test="${sessionScope.member.memberId==nc.noticeCommentWriter }">
-									<a href="javascript:void(0)">수정</a>
+									<a href="javascript:void(0)" onclick="modifyComment(this, '${nc.noticeCommentNo}','${nc.noticeRef }')">수정</a>
 									<a href="javascript:void(0)" onclick="deleteComment('${nc.noticeCommentNo}','${nc.noticeRef }');">삭제</a>
 								</c:if>
 							</c:if>
@@ -121,7 +121,7 @@
 							</li>
 							<li style="width:55%">
 								<span>${ncc.noticeCommentContent }</span>
-								<input type="text" class="form-control" name="noticeCommentContent" value="${ncc.noticeCommentContent }" style="disaplay:none;">
+								<input type="text" class="form-control" name="noticeCommentContent" value="${ncc.noticeCommentContent }" style="display:none;">
 							</li>
 							<li style="width:10%; text-align:center;">
 								<span>${ncc.noticeCommentDate }</span>
@@ -129,8 +129,8 @@
 							<li style="width:20%; text-align:center;">
 								<c:if test="${not empty sessionScope.member.memberId && sessionScope.member.memberId eq ncc.noticeCommentWriter }">
 									<a></a>
-									<a href="javascriptLvoid(0)">수정</a>
-									<a href="javascriptLvoid(0)" onclick="deleteComment('${ncc.noticeCommentNo}','${ncc.noticeRef }');">삭제</a>
+									<a href="javascript:void(0)" onclick="modifyComment(this, '${ncc.noticeCommentNo}','${ncc.noticeRef }')">수정</a>
+									<a href="javascript:void(0)" onclick="deleteComment('${ncc.noticeCommentNo}','${ncc.noticeRef }');">삭제</a>
 								</c:if>
 							</li>
 						</ul>
@@ -176,6 +176,34 @@
 		
 		function deleteComment(noticeCommentNo,noticeRef){
 			location.href="/noticeComentDelete?noticeCommentNo="+noticeCommentNo+"&noticeRef="+noticeRef;
+		}
+		
+		function modifyComment(obj,noticeCommentNo, noticeRef){
+			$(obj).prev().hide();
+			$(obj).html("수정완료");
+			$(obj).attr('onclick','modifyComplete(this,"'+noticeCommentNo+'","'+noticeRef+'")');
+			$(obj).next().html("취소");
+			$(obj).next().attr('onclick','modifyCancel(this,"'+noticeCommentNo+'","'+noticeRef+'")');
+			$(obj).parent().parent().find("input").show();
+			$(obj).parent().parent().find("input").prev().hide();
+		}
+		
+		function modifyComplete(obj,noticeCommentNo,noticeRef){
+			var $form = $("<form action='/noticeCommentUpdate' method='post'></form>");
+			$form.append($("<input type='text' name='noticeCommentNo' value='"+noticeCommentNo+"'>"));
+			$form.append($("<input type='text' name='noticeRef' value='"+noticeRef+"'>"));
+			$form.append($(obj).parent().parent().find("input"));
+			$("body").append($form);
+			$form.submit();
+		}
+		function modifyCancel(obj,noticeCommentNo,noticeRef){
+			$(obj).prev().prev().show();
+			$(obj).prev().html("수정");
+			$(obj).prev().attr('onclick','modifyComment(this,"'+noticeCommentNo+'","'+noticeRef+'")');
+			$(obj).html("삭제");
+			$(obj).attr('onclick','deleteComment("'+noticeCommentNo+'","'+noticeRef+'")');
+			$(obj).parent().parent().find("input").hide();
+			$(obj).parent().parent().find("input").prev().show();
 		}
 	</script>
 </body>

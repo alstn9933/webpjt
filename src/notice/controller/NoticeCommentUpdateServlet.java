@@ -1,27 +1,23 @@
 package notice.controller;
 
 import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import notice.model.service.NoticeService;
-
 /**
- * Servlet implementation class NoticeComentDeleteServlet
+ * Servlet implementation class NoticeCommentUpdateServlet
  */
-@WebServlet(name = "NoticeComentDelete", urlPatterns = { "/noticeComentDelete" })
-public class NoticeComentDeleteServlet extends HttpServlet {
+@WebServlet(name = "NoticeCommentUpdate", urlPatterns = { "/noticeCommentUpdate" })
+public class NoticeCommentUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeComentDeleteServlet() {
+    public NoticeCommentUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,14 +27,6 @@ public class NoticeComentDeleteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		int noticeCommentNo = Integer.parseInt(request.getParameter("noticeCommentNo"));
-		int noticeNo = Integer.parseInt(request.getParameter("noticeRef"));
-		int result = new NoticeService().deleteNoticeComment(noticeCommentNo);
-		if(result>0) {
-			System.out.println("성공");
-		}else{
-			System.out.println("실패");
-		}
 	}
 
 	/**
