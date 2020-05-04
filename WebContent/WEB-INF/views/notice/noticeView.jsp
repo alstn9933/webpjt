@@ -175,7 +175,7 @@
 		}
 		
 		function deleteComment(noticeCommentNo,noticeRef){
-			location.href="/noticeComentDelete?noticeCommentNo="+noticeCommentNo+"&noticeRef="+noticeRef;
+			location.href="/noticeComentDelete?noticeCommentNo="+noticeCommentNo+"&noticeNo="+noticeRef;
 		}
 		
 		function modifyComment(obj,noticeCommentNo, noticeRef){

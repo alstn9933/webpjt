@@ -217,11 +217,30 @@ public class NoticeDao {
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, noticeCommentNo);
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public int modifyNoticeComment(Connection conn, int noticeCommentNo, String noticeCommentContent) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "update notice_comment set notice_comment_content=? where notice_comment_no=?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, noticeCommentContent);
+			pstmt.setInt(2, noticeCommentNo);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			JDBCTemplate.close(conn);
 		}
 		return result;
 	}

@@ -32,13 +32,16 @@ public class NoticeComentDeleteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		int noticeCommentNo = Integer.parseInt(request.getParameter("noticeCommentNo"));
-		int noticeNo = Integer.parseInt(request.getParameter("noticeRef"));
+		int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
 		int result = new NoticeService().deleteNoticeComment(noticeCommentNo);
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
 		if(result>0) {
-			System.out.println("성공");
+			request.setAttribute("msg", "삭제완료");
 		}else{
-			System.out.println("실패");
+			request.setAttribute("msg", "삭제실패");
 		}
+		request.setAttribute("loc", "/noticeView?noticeNo="+noticeNo);
+		rd.forward(request, response);
 	}
 
 	/**
