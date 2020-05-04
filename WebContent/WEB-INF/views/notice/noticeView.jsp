@@ -7,16 +7,23 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 	<style>
-		.table-wrapper{
+		.table-wrapper,.comment-write,.comment-wrapper{
 			width:1000px;
 			margin: 0 auto;
 		}
 		.table-wrapper tr>td:first-child{
 			width:20%;
 		}
-		.comment-write{
-			width:1000px;
-			margin: 0 auto;
+		.commentList{
+			width:100%;
+			clear: both;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			overview:hidden;
+		}
+		.commentList>li{
+			float:left;
+			color:black;
 		}
 	</style>
 </head>
@@ -78,6 +85,24 @@
 				</form>
 			</div>
 		</c:if>
+		<div class="comment-wrapper">
+			<c:forEach items="${list }" var="nc">
+				<ul class="commentList">
+					<li style="width:10%; text-align:center;"><span>${nc.noticeCommentWriter }</span></li>
+					<li style="width:60%;"><span>${nc.noticeCommentContent }</span></li>
+					<li style="width:10%; text-align:center;"><span>${nc.noticeCommentDate }</span></li>
+					<li style="width:20%; text-align:center;">
+						<c:if test="${not empty sessionScope.member }">
+							<a href="javascript:void(0)">댓글달기</a>
+							<c:if test="${sessionScope.member.memberId==nc.noticeCommentWriter }">
+								<a href="javascript:void(0)">수정</a>
+								<a href="javascript:void(0)">삭제</a>
+							</c:if>
+						</c:if>
+					</li>
+				</ul>
+			</c:forEach>
+		</div>
 	</section>
 	<script>
 		function fileDownload(filename,filepath){

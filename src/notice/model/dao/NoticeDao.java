@@ -180,5 +180,35 @@ public class NoticeDao {
 		return result;
 	}
 
+	public ArrayList<NoticeComment> selectCommentList(Connection conn, int noticeNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<NoticeComment> list = new ArrayList<NoticeComment>();
+		String query = "select * from notice_comment where notice_ref = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, noticeNo);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				NoticeComment nc = new NoticeComment();
+				nc.setNoticeCommentNo(rset.getInt("notice_comment_no"));
+				nc.setNoticeCommentLevel(rset.getInt("notice_comment_level"));
+				nc.setNoticeCommentWriter(rset.getString("notice_comment_writer"));
+				nc.setNoticeCommentContent(rset.getString("notice_comment_content"));
+				nc.setNoticeCommentDate(rset.getDate("notice_comment_date"));
+				nc.setNoticeCommentRef(rset.getInt("notice_comment_ref"));
+				nc.setNoticeRef(rset.getInt("notice_ref"));
+				list.add(nc);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return list;
+	}
+
 
 }

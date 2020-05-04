@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import notice.model.service.NoticeService;
 import notice.model.vo.Notice;
+import notice.model.vo.NoticeViewData;
 
 /**
  * Servlet implementation class DeleteNoticeServlet
@@ -34,13 +35,13 @@ public class DeleteNoticeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
-		Notice n = new NoticeService().selectOneNotice(noticeNo);
+		NoticeViewData nvd = new NoticeService().selectOneNotice(noticeNo);
 		int result = new NoticeService().deleteNotice(noticeNo);
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
 		if(result>0) {
-			if(n.getFilepath()!=null) {
+			if(nvd.getN().getFilepath()!=null) {
 				String savaDirectory = getServletContext().getRealPath("/upload/notice/");
-				File delFile = new File(savaDirectory+n.getFilepath());
+				File delFile = new File(savaDirectory+nvd.getN().getFilepath());
 				Boolean bool = delFile.delete();
 			}
 			request.setAttribute("msg", "삭제완료");

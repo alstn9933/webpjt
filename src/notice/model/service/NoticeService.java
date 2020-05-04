@@ -8,6 +8,7 @@ import notice.model.dao.NoticeDao;
 import notice.model.vo.Notice;
 import notice.model.vo.NoticeComment;
 import notice.model.vo.NoticePageData;
+import notice.model.vo.NoticeViewData;
 
 public class NoticeService {
 
@@ -66,11 +67,14 @@ public class NoticeService {
 		return result;
 	}
 
-	public Notice selectOneNotice(int noticeNo) {
+	public NoticeViewData selectOneNotice(int noticeNo) {
 		Connection conn = JDBCTemplate.getConnection();
 		Notice n = new NoticeDao().selectOneNotice(conn,noticeNo);
+		ArrayList<NoticeComment> list = new NoticeDao().selectCommentList(conn,noticeNo);
 		JDBCTemplate.close(conn);
-		return n;
+		
+		NoticeViewData nvd = new NoticeViewData(n,list);
+		return nvd;
 	}
 
 	public int deleteNotice(int noticeNo) {
