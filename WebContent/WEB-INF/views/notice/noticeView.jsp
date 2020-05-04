@@ -14,6 +14,10 @@
 		.table tr>td:first-child{
 			width:20%;
 		}
+		.table-wrapper,.comment-write{
+			width:1000px;
+			margin: 0 auto;
+		}
 	</style>
 </head>
 <body>
@@ -54,8 +58,8 @@
 				</tr>
 			</table>
 		</div>
-		<c:if test="${not empty sessinScope.member }">
-			<div class="comment-wrapper">
+		<c:if test="${not empty sessionScope.member }">
+			<div class="comment-write">
 				<form action="/noticeCommentInsert" method="post">
 				<input type="hidden" name="noticeCommentWriter" value="${sessionScope.member.memberId }">
 				<input type="hidden" name="noticeRef" value="${n.noticeNo }">
