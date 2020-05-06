@@ -24,8 +24,8 @@
 						<li class="nav-item"><a class="nav-link" href="/noticeList?reqPage=1">공지사항</a></li>
 						<li class="nav-item"><a class="nav-link" href="#">Menu2</a></li>
 						<li class="nav-item"><a class="nav-link" href="#">Menu3</a></li>
-						<li class="nav-item"><a class="nav-link" href="#">Menu4</a></li>
-						<li class="nav-item"><a class="nav-link" href="#">Menu5</a></li>
+						<li class="nav-item"><a class="nav-link" href="/views/ajaxTest.jsp">Ajax</a></li>
+						<li class="nav-item"><a class="nav-link" href="/views/apiTest.jsp">API</a></li>
 					</ul>
 				</div>
 				<div class="right-button">
