@@ -22,7 +22,7 @@
 				<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
 					<ul class="nav navbar-nav menu_nav ml-auto">
 						<li class="nav-item"><a class="nav-link" href="/noticeList?reqPage=1">공지사항</a></li>
-						<li class="nav-item"><a class="nav-link" href="#">Menu2</a></li>
+						<li class="nav-item"><a class="nav-link" href="/photoList">사진게시판</a></li>
 						<li class="nav-item"><a class="nav-link" href="#">Menu3</a></li>
 						<li class="nav-item"><a class="nav-link" href="/views/ajaxTest.jsp">Ajax</a></li>
 						<li class="nav-item"><a class="nav-link" href="/views/apiTest.jsp">API</a></li>
