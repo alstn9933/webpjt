@@ -209,6 +209,39 @@
 				});
 			});
 		</script>
+		
+		<h3>6. 메일전송</h3>
+		<input type="text" id="mail">
+		<button id="mailBtn" class="btn btn-primary">메일전송</button>
+		<input type="text" id="mailCode" style="display:none;">
+		<button id="mailResult" class="btn btn-primary" style="display:none;">메일확인</button>
+		<span id="mailMsg"></span>
+		<script>
+			var mailCode="";
+			$("#mailBtn").click(function(){
+				var email = $("#mail").val();
+				$.ajax({
+					url : "/sendMail",
+					type : "post",
+					data : {email:email},
+					success : function(data){
+						mailCode = data;
+						$("#mailCode").show();
+						$("#mailResult").show();
+						
+					}
+				});
+			});
+			$("#mailResult").click(function(){
+				if($("#mailCode").val()==mailCode){
+					$("#mailMsg").html("인증성공");
+					$("#mailMsg").css("color","green");
+				}else{
+					$("#mailMsg").html("인증실패");
+					$("#mailMsg").css("color","red");
+				}
+			});
+		</script>
 	</section>
 </body>
 </html>
