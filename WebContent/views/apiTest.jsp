@@ -151,7 +151,7 @@
 					if(rsp.success){//결제 성공했을때
 						var msg = "결제가 완료되었습니다";
 						var r1 = "고유 Id : "+rsp.imp_uid;
-						var r2 = "상점 거래 아디디 : "+rsp.merchant_uid;
+						var r2 = "상점 거래 아이디 : "+rsp.merchant_uid;
 						var r3 = "결제 금액 : "+rsp.paid_amount;
 						var r4 = "카드 승인 번호 : "+rsp.apply_num;
 						$("#paymentResult").html(msg+"<br>"+r1+"<br>"+r2+"<br>"+r3+"<br>"+r4);
